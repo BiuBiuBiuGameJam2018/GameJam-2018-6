@@ -6,6 +6,8 @@ public class MainManger : Singleton<MainManger>
 {
     public List<TrailRenderer> BotanyList;
     public TrailRenderer CurSelect;
+    public List<BotanyBase> BotanyList;//所有植物列表
+    public BotanyBase CurSelect;
     public GameObject Bg;
 
     public int serialnumber = 0;
