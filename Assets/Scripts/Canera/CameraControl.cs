@@ -13,6 +13,7 @@ public class CameraControl : MonoBehaviour {
         leftdown = MainManger.Instance.Bg.transform.Find("leftdown").gameObject;
         rightup = MainManger.Instance.Bg.transform.Find("rightup").gameObject;
     }
+
 	
 	// Update is called once per frame
 	void Update () {
