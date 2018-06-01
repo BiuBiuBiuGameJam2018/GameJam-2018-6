@@ -46,7 +46,6 @@ public class MainManger : Singleton<MainManger>
     /// </summary>
     void GenerateTrail(params Vector2[] pos)
     {
-
         if (pos.Length <= 0)
             return;
         foreach (var item in pos)
@@ -56,18 +55,9 @@ public class MainManger : Singleton<MainManger>
             if (Bg != null)
                 CurSelect.transform.position = Bg.transform.position - new Vector3(0, 0, 5);
             CurSelect.transform.SetParent(TrailRoot.transform);
+            CurSelect.time = 360000000000f;
             CurSelect.transform.position = new Vector3(item.x, item.y, CurSelect.transform.position.z);
             serialnumber++;
         }
-
     }
-
-}
-/// <summary>
-/// 种子结构体 待定
-/// </summary>
-public class SeedStuct
-{
-    public Vector3 pos;
-
 }
