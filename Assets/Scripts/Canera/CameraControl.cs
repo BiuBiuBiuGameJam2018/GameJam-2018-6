@@ -57,7 +57,5 @@ public class CameraControl : MonoBehaviour {
         {
             transform.Translate(Vector3.down * Time.deltaTime * speed * Camera.main.orthographicSize);
         }
-
-
     }
 }
