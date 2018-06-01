@@ -22,10 +22,13 @@ public class MainManger : Singleton<MainManger>
             return trailroot;
         }
     }
+
+    public void Init() {
+        Bg = GameObject.Find("Bg");
+    }
     #region 
     public void Begin()
     {
-        Bg = GameObject.Find("Bg");
     }
     public void Load()
     {

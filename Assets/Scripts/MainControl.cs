@@ -10,12 +10,17 @@ public enum GameState
 }
 public class MainControl : MonoBehaviour {
     public GameState Game_State=GameState.Enum_Begin;
+
+    private void Awake()
+    {
+        
+    }
     // Use this for initialization
     void Start () {
-		
-	}
-	// Update is called once per frame
-	void Update () {
+        MainManger.Instance.Init();
+    }
+    // Update is called once per frame
+    void Update () {
         switch (Game_State)
         {
             case GameState.Enum_Begin:
