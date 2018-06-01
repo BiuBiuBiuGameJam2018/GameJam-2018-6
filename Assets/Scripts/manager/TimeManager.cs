@@ -36,7 +36,7 @@ public class TimeManager : Singleton<TimeManager> {
     /// </summary>
     public void GameUpdate()
     {        
-        if ( DayTime<Time.time-startdaytime && TimeState==Enum_DayNight.Day)
+        if ( DayTime<Time.time-startdaytime && TimeState==Enum_DayNight.Day)//变为晚上
         {
             TimeState = Enum_DayNight.Night;
             startnighttime = Time.time;
