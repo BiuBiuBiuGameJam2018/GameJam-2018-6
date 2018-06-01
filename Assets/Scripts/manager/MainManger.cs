@@ -53,7 +53,10 @@ public class MainManger : Singleton<MainManger>
             return;
         foreach (var item in pos)
         {
-            CurSelect = new GameObject().AddComponent<TrailRenderer>();
+            BotanyBase sss = new BotanyBase();
+            sss.Create(item);
+
+                        CurSelect = new GameObject().AddComponent<TrailRenderer>();
             CurSelect.name = serialnumber.ToString("00");
             if (Bg != null)
                 CurSelect.transform.position = Bg.transform.position - new Vector3(0, 0, 5);
