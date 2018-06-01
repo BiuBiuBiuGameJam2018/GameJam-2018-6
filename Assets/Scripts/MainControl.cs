@@ -11,7 +11,7 @@ public enum GameState
 public class MainControl : MonoBehaviour {
     public GameState Game_State=GameState.Enum_Begin;
 
-    private void Awake()
+     void Awake()
     {
         MainManger.Instance.Init();
     }
