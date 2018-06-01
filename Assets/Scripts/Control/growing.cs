@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class growing : MonoBehaviour {
     public GameObject target;
+    public GameObject node;
     float rospeedH = 0;
     public float speed = 1;
     bool moving = false;
