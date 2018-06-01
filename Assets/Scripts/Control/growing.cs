@@ -44,7 +44,7 @@ public class growing : MonoBehaviour {
             }
             transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
             transform.Translate(Time.deltaTime * speed * Vector3.up);
-
+            MainManger.Instance.CurSelect.transform.position = transform.position;
         }
 	}
 }
