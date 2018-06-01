@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class MainManger : Singleton<MainManger>
 {
-    public List<TrailRenderer> BotanyList;
-    public TrailRenderer CurSelect;
+
     public List<BotanyBase> BotanyList;//所有植物列表
     public BotanyBase CurSelect;
     public GameObject Bg;
@@ -55,21 +54,7 @@ public class MainManger : Singleton<MainManger>
             return;
         foreach (var item in pos)
         {
-<<<<<<< HEAD
             BotanyBase botanybase = new BotanyBase(item);
-=======
-            BotanyBase sss = new BotanyBase();
-            sss.Create(item);
-
-                        CurSelect = new GameObject().AddComponent<TrailRenderer>();
-            CurSelect.name = serialnumber.ToString("00");
-            if (Bg != null)
-                CurSelect.transform.position = Bg.transform.position - new Vector3(0, 0, 5);
-            CurSelect.transform.SetParent(TrailRoot.transform);
-            CurSelect.time = 360000000000f;
-            CurSelect.transform.position = new Vector3(item.x, item.y, CurSelect.transform.position.z);
-            serialnumber++;
->>>>>>> 625e6d85887983841bc2a3917fb9e0cd04a46925
         }
     }
 }
