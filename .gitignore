@@ -33,3 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Assets/Scenes/Game.unity
+Assets/Scripts/manager/TimeManager.cs
+Assets/Scripts/manager/TimeManager.cs

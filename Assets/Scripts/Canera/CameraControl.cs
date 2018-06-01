@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
     public float nearest,furthest;
-    public GameObject leftdown, rightup;
+    GameObject leftdown, rightup;
     public int remainpixel = 50;
     Vector2 p1, p2;//用来记录鼠标的位置，以便计算移动距离  
     // Use this for initialization
     float speed = 1;
 	void Start () {
-		
-	}
+        leftdown = MainManger.Instance.Bg.transform.Find("leftdown").gameObject;
+        rightup = MainManger.Instance.Bg.transform.Find("rightup").gameObject;
+    }
 	
 	// Update is called once per frame
 	void Update () {
