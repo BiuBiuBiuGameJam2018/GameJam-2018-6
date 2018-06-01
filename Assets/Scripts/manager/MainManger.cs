@@ -53,7 +53,7 @@ public class MainManger : Singleton<MainManger>
             return;
         foreach (var item in pos)
         {
-            
+            BotanyBase botanybase = new BotanyBase(item);
         }
     }
 }

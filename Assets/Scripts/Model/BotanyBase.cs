@@ -14,19 +14,27 @@ public enum EnumBotanyState
 }
 public class Objbase
 {
-
+   
 }
 public class BotanyBase : Objbase
 {
     public EnumBotanyType BotanyType;
     public EnumBotanyState BotanyState;
     public TrailRenderer MainTrail;
+    public GameObject SphereNood;
 
     //data
     public int BranchConsumption;//分支消耗 需要配置
 
 
-    public void Create(Vector2 pos) {
+    public BotanyBase(Vector2 pos) {
+        Create(pos);
+    }
+    /// <summary>
+    /// 创建时调用
+    /// </summary>
+    /// <param name="pos"></param>
+     void Create(Vector2 pos) {
         MainTrail = new GameObject().AddComponent<TrailRenderer>();
         MainTrail.name = MainManger.Instance.serialnumber.ToString("00");
         if (MainManger.Instance.Bg != null)
@@ -35,6 +43,8 @@ public class BotanyBase : Objbase
         MainTrail.time = 360000000000f;
         MainTrail.transform.position = new Vector3(pos.x, pos.y, MainTrail.transform.position.z);
         MainManger.Instance.serialnumber++;
+
+
     }
 
 }
