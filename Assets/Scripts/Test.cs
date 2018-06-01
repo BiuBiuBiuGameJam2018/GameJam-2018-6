@@ -13,9 +13,8 @@ public class Test : MonoBehaviour {
 	void Update () {
         transform.position = new Vector3(transform.position.x,TimeManager.Instance.GetPercent(),transform.position.z);
         if (TimeManager.Instance.TimeState == Enum_DayNight.Day)
-            gameObject.SetActive(true);
         else
-            gameObject.SetActive(false);
+            transform.localScale = new Vector3(1, 2, 1);
         TimeManager.Instance.GameUpdate();
         Debug.Log(TimeManager.Instance. TimeState);
     }
