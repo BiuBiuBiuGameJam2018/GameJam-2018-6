@@ -37,3 +37,6 @@ Assets/Scripts/manager/TimeManager.cs
 Assets/Scripts/manager/TimeManager.cs
 Assets/Scripts/manager/TimeManager.cs
 Assets/Scripts/Test.cs
+Assets/Scripts/Control/growing.cs
+Assets/Scenes/Game.unity
+*.unity
