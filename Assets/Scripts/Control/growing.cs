@@ -16,7 +16,6 @@ public class growing : MonoBehaviour {
 	void Update () {
 		if(Input.GetMouseButton(0))
         {
-            print("a");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
@@ -43,7 +42,7 @@ public class growing : MonoBehaviour {
                     rospeedH = 0;
 
             }
-            transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -1));
+            transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
             transform.Translate(Time.deltaTime * speed * Vector3.up);
 
         }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
     public float nearest,furthest;
+    public GameObject leftdown, rightup;
+    public int remainpixel = 50;
+    Vector2 p1, p2;//用来记录鼠标的位置，以便计算移动距离  
     // Use this for initialization
     float speed = 1;
 	void Start () {
@@ -25,24 +28,34 @@ public class CameraControl : MonoBehaviour {
         {
             if (Camera.main.fieldOfView > 2)
                 Camera.main.fieldOfView -= 2;
-            if (Camera.main.orthographicSize >= 1)
+            if (Camera.main.orthographicSize >=nearest)
                 Camera.main.orthographicSize -= 0.5F;
         }
-        if (Input.mousePosition.x <= 0)
+        if ((Input.mousePosition.x <= 0
+            &&Camera.main.WorldToScreenPoint(leftdown.transform.position).x< remainpixel)
+            || Camera.main.WorldToScreenPoint(rightup.transform.position).x < Screen.width- remainpixel)
         {
-            transform.Translate(Vector3.left*Time.deltaTime*speed* Camera.main.orthographicSize);
+            transform.Translate(Vector3.left * Time.deltaTime * speed * Camera.main.orthographicSize);
         }
-        if (Input.mousePosition.x >= Screen.width)
+        if ((Input.mousePosition.x >= Screen.width
+            && Camera.main.WorldToScreenPoint(rightup.transform.position).x > Screen.width- remainpixel)
+            || Camera.main.WorldToScreenPoint(leftdown.transform.position).x > remainpixel)
         {
             transform.Translate(Vector3.right * Time.deltaTime * speed * Camera.main.orthographicSize);
         }
-        if (Input.mousePosition.y >= Screen.height)
+        if ((Input.mousePosition.y >= Screen.height
+            && Camera.main.WorldToScreenPoint(rightup.transform.position).y > Screen.height - remainpixel)
+            || Camera.main.WorldToScreenPoint(leftdown.transform.position).y > remainpixel)
         {
             transform.Translate(Vector3.up * Time.deltaTime * speed * Camera.main.orthographicSize);
         }
-        if (Input.mousePosition.y <= 0)
+        if ((Input.mousePosition.y <= 0
+            && Camera.main.WorldToScreenPoint(leftdown.transform.position).y < remainpixel)
+            || Camera.main.WorldToScreenPoint(rightup.transform.position).y < Screen.height - remainpixel)
         {
             transform.Translate(Vector3.down * Time.deltaTime * speed * Camera.main.orthographicSize);
         }
+
+
     }
 }
