@@ -10,6 +10,7 @@ public class MainManger : Singleton<MainManger>
     public List<BotanyBase> BotanyList;//所有植物列表
     public BotanyBase CurSelect;
     public GameObject Bg;
+    public GameObject node;
 
     public int serialnumber = 0;
     GameObject trailroot;
@@ -41,7 +42,7 @@ public class MainManger : Singleton<MainManger>
 
     public void Generate()
     {
-        GenerateTrail(new Vector2());
+        //GenerateTrail();
     }
     public void GameUpdate()
     {
@@ -51,12 +52,13 @@ public class MainManger : Singleton<MainManger>
     /// <summary>
     ///生成种子
     /// </summary>
-    public void GenerateTrail(params Vector2[] pos)
+    public void GenerateTrail(params Transform[]tran)
     {
-        if (pos.Length <= 0)
+        if (tran.Length <= 0)
             return;
-        foreach (var item in pos)
+        foreach (var item in tran)
         {
+            
             serialnumber = BotanyList.Count;
             BotanyBase botanybase = new BotanyBase(item);
             BotanyList.Add(botanybase);
@@ -65,6 +67,7 @@ public class MainManger : Singleton<MainManger>
 
     public BotanyBase SelectFunc(GameObject obj)
     {
-        return BotanyList.Find(o => o.SphereNood.Equals(obj));
+        CurSelect = BotanyList.Find(o => o.SphereNode.Equals(obj));
+        return CurSelect;
     }
 }

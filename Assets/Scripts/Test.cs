@@ -17,6 +17,6 @@ public class Test : MonoBehaviour {
         else
             transform.localScale = new Vector3(1, 2, 1);
         TimeManager.Instance.GameUpdate();
-        Debug.Log(TimeManager.Instance.TimeState);
+        Debug.Log(TimeManager.Instance. TimeState);
     }
 }

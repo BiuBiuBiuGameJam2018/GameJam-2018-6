@@ -23,8 +23,10 @@ public class growing : MonoBehaviour {
             RaycastHit myHit;
             if (Physics.Raycast(myRay, out myHit))
             {
-                if (Input.GetMouseButtonDown(0)&&myHit.collider.gameObject == gameObject)//点到自己
+                if (Input.GetMouseButtonDown(0)&& myHit.collider.gameObject.tag=="node")//点到node
                 {
+                    
+
                     moving = true;
                 }
             }
@@ -57,9 +59,8 @@ public class growing : MonoBehaviour {
                     rospeedH = 0;
 
             }
-            transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
-            transform.Translate(Time.deltaTime * speed * Vector3.up);
-           MainManger.Instance.CurSelect.MainTrail.transform.position = transform.position;
+            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
+            MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
         }
 
         if(Input.GetMouseButtonUp(0)&&moving)
