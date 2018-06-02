@@ -208,4 +208,14 @@ public class BotanyBase : Objbase
         }
         return true;
     }
+    /// <summary>
+    /// 长叶子
+    /// </summary>
+    public void GrowLeaf() {
+        Object obj = Resources.Load("Botany/Leaf");
+        GameObject Leaf = UnityEngine.Object.Instantiate(obj) as GameObject;
+        Leaf.transform.SetParent(SphereNode.transform);
+        Leaf.transform.position = SphereNode.transform.position;
+
+    }
 }
