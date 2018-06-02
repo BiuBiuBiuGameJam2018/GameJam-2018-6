@@ -35,6 +35,7 @@ public class BotanyBase : Objbase
     /// </summary>
     /// <param name="pos"></param>
      void Create(Vector2 pos) {
+        GameObject node = Resources.Load("Botany/node") as GameObject;
         MainTrail = new GameObject().AddComponent<TrailRenderer>();
         MainTrail.name = MainManger.Instance.serialnumber.ToString("00");
         if (MainManger.Instance.Bg != null)
