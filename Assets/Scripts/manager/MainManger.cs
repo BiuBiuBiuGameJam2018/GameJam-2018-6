@@ -44,6 +44,7 @@ public class MainManger : Singleton<MainManger>
     {
         BotanyBase a = null;
         GenerateTrail(a);
+        GenerateTrail(a);
     }
     public void GameUpdate()
     {

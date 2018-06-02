@@ -29,7 +29,10 @@ public class Objbase
 public class BotanyBase : Objbase
 {
     public BotanyBase father = null;
-
+    /// <summary>
+    /// 生长距离
+    /// </summary>
+    public float GrowDis;
     /// <summary>
     /// 植物类型
     /// </summary>
@@ -43,8 +46,7 @@ public class BotanyBase : Objbase
     public GameObject target;
 
     //data
-    protected int Serialnumber;
-    public int BranchConsumption;//分支消耗 需要配置
+    protected int Serialnumber;///编号
     public float scale = 1;
     public float reducescale = 0.95f;//每一级的缩放比例
 
@@ -67,8 +69,9 @@ public class BotanyBase : Objbase
 
             float y = Serialnumber == 0 ? 0.5f : -0.5f;
             beginPos = new Vector3(0, Serialnumber, MainManger.Instance.Bg.transform.position.z);
-            SphereNode = UnityEngine.Object.Instantiate(node, MainManger.Instance.Bg.transform.position + 2 * Vector3.back, Quaternion.Euler(Vector3.zero)) as GameObject;
-            SphereNode.transform.position = MainManger.Instance.Bg.transform.position +( Serialnumber==0?1 * Vector3.back:-1 * Vector3.back);
+            SphereNode = UnityEngine.Object.Instantiate(node, MainManger.Instance.Bg.transform.position - 2 * Vector3.back, Quaternion.Euler(Vector3.zero)) as GameObject;
+            SphereNode.transform.position = MainManger.Instance.Bg.transform.position + 1 * Vector3.back;
+            SphereNode.transform.position += (0.5f * (Serialnumber == 0 ? Vector3.up : Vector3.down));
             SphereNode.transform.eulerAngles = Vector3.zero;
         }
         else
@@ -90,8 +93,7 @@ public class BotanyBase : Objbase
         }
         else
         {
-            DataInit();
-
+            DataInit(Serialnumber == 0 ? EnumBotanyType.TypeUp : EnumBotanyType.TypeDown);
         }
         SphereNode.transform.localScale *= scale;//缩放
         MainTrail.transform.position = SphereNode.transform.position;
@@ -101,7 +103,17 @@ public class BotanyBase : Objbase
     {
         BotanyState = EnumBotanyState.Seed;
         BotanyType = botanyType;
-
+        switch (BotanyType)
+        {
+            case EnumBotanyType.TypeUp:
+                speed = DataManager.Instance.branchGrowSpeed;
+                break;
+            case EnumBotanyType.TypeDown:
+                speed = DataManager.Instance.rootGrowSpeed;
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -109,22 +121,10 @@ public class BotanyBase : Objbase
     public float speed = 1;
     public void BeginGrow(RaycastHit hit)
     {
-        if (BotanyType == EnumBotanyType.TypeUp)
-        {
-            if (SphereNode.transform.position.y < 0.5f)
-            {
-                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, 0.5f, SphereNode.transform.position.z);
-                return;
-            }
-        }
-        if (BotanyType == EnumBotanyType.TypeDown)
-        {
-            if (SphereNode.transform.position.y >- 0.5f)
-            {
-                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, -0.5f, SphereNode.transform.position.z);
-                return;
-            }
-        }
+        if (!CheckType())
+            return;
+        if (!ChecktGrow())
+            return;
         target.transform.position = new Vector3(hit.point.x, hit.point.y, MainManger.Instance.CurSelect.SphereNode.transform.position.z);
         if (target.transform.localPosition.x > 0.2f)
         {
@@ -148,5 +148,60 @@ public class BotanyBase : Objbase
         MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0, -3));
         MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
 
+    }
+    /// <summary>
+    /// 类型验证
+    /// </summary>
+    bool CheckType()
+    {
+        if (BotanyType == EnumBotanyType.TypeUp)
+        {
+            if (SphereNode.transform.position.y < 0.5f)
+            {
+                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, 0.5f, SphereNode.transform.position.z);
+                return false;
+            }
+        }
+        if (BotanyType == EnumBotanyType.TypeDown)
+        {
+            if (SphereNode.transform.position.y > -0.5f)
+            {
+                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, -0.5f, SphereNode.transform.position.z);
+                return false;
+            }
+        }
+        return true;
+    }
+    //新枝
+    public void NewBranchesAndLeaves()
+    {
+
+    }
+
+    public float timer = 1.0f;
+
+    public bool ChecktGrow()
+    {
+        if (DataManager.Instance.CurEnergy <= 0)
+        {
+            Debug.Log(" 能量不足");
+            return false;
+        }
+        if (BotanyState == EnumBotanyState.Seed)
+        {
+            Debug.Log("新枝丫消耗");
+            var value = DataManager.Instance.EnergyConsumption(0, BotanyType);
+            if (value <= 0)
+                return false;
+            GrowDis += value;
+            BotanyState = EnumBotanyState.GrowingUp;
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            var value = DataManager.Instance.EnergyConsumption(1, BotanyType);
+            timer = 1.0f;
+        }
+        return true;
     }
 }
