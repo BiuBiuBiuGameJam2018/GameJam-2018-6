@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MonitorTool.src.core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum GameState
@@ -8,18 +9,28 @@ public enum GameState
     Enum_Generate,//生成
     Enum_Update,//刷新
 }
-public class MainControl : MonoBehaviour {
-    public GameState Game_State=GameState.Enum_Begin;
-
-     void Awake()
+public class MainControl : MonoBehaviour
+{
+    public GameState Game_State = GameState.Enum_Begin;
+    public string ConfigPath
+    {
+        get
+        {
+            return Application.streamingAssetsPath + "\\Config\\";
+        }
+    }
+    void Awake()
     {
         MainManger.Instance.Init();
+        MainManger.Instance.ConfigPath = ConfigPath;
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
     }
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         switch (Game_State)
         {
             case GameState.Enum_Begin:
@@ -38,13 +49,15 @@ public class MainControl : MonoBehaviour {
                 break;
         }
     }
-    public void Begin() {
+    public void Begin()
+    {
 
         MainManger.Instance.Begin();
         TimeManager.Instance.Begin();
         Game_State = GameState.Enum_Load;
     }
-    public void Load() {
+    public void Load()
+    {
 
         MainManger.Instance.Load();
         TimeManager.Instance.Load();

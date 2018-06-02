@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MainManger : Singleton<MainManger>
 {
-
+    //路径
+    public string ConfigPath;
+    //
     public List<BotanyBase> BotanyList;//所有植物列表
     public BotanyBase CurSelect;
     public GameObject Bg;
