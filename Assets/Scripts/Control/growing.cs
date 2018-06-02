@@ -37,6 +37,7 @@ public class growing : MonoBehaviour {
             RaycastHit hit = new RaycastHit();
             if (!Physics.Raycast(ray, out hit))
             {
+<<<<<<< HEAD
                 Debug.Log("Ray Null");
                 return;
             }
@@ -45,13 +46,39 @@ public class growing : MonoBehaviour {
             Rotating(vtr1);
             //MainManger.Instance.CurSelect.SphereNode.transform.Rotate(MainManger.Instance.CurSelect.SphereNode.transform.forward*rospee);
             MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.forward);
+=======
+                target.transform.position = new Vector3(hit.point.x, hit.point.y,MainManger.Instance.CurSelect.SphereNode. transform.position.z);
+            }
+            if (target.transform.localPosition.x > 0.2f)
+            {
+                if (rospeedH < 55)
+                    rospeedH += 5;
+            }
+            else if (target.transform.localPosition.x < -0.2f)
+            {
+                if (rospeedH > -55)
+                    rospeedH -= 5;
+            }
+            else
+            {
+                if (rospeedH > 5)
+                    rospeedH -= 9;
+                else if (rospeedH < -5)
+                    rospeedH += 9;
+                else
+                    rospeedH = 0;
+
+            }
+            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0,-3));
+            MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
+>>>>>>> 5bea485b4afd166be90d8f89dba4d53320b726ca
         }
 
         if(Input.GetMouseButtonUp(0)&&moving)
         {
             moving = false;
             //GameObject newnode = Instantiate(node,transform.position,this.transform.rotation);
-            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect.SphereNode.transform);
+            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect);
 
 
             //newnode.transform.localScale = new Vector3(1, 1, 1) * 0.95f*scale;
