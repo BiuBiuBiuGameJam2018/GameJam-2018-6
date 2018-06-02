@@ -12,7 +12,6 @@ public class MainManger : Singleton<MainManger>
 
     public int serialnumber = 0;
     GameObject trailroot;
-
     public GameObject TrailRoot
     {
         get
