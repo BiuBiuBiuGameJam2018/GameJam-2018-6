@@ -5,8 +5,6 @@ using UnityEngine;
 public class growing : MonoBehaviour {
     public GameObject target;
     //public GameObject node;
-    float rospeedH = 0;
-    public float speed = 1;
     bool moving = false;
     public float scale = 1;
     //public GameObject mousedir;
@@ -37,34 +35,8 @@ public class growing : MonoBehaviour {
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
             {
-<<<<<<< HEAD
-
-=======
->>>>>>> bf5e2933e1cb63923870bf51bd82e09177dedd84
-                target.transform.position = new Vector3(hit.point.x, hit.point.y,MainManger.Instance.CurSelect.SphereNode. transform.position.z);
+                MainManger.Instance.CurSelect.BeginGrow(hit);
             }
-            if (target.transform.localPosition.x > 0.2f)
-            {
-                if (rospeedH < 55)
-                    rospeedH += 5;
-            }
-            else if (target.transform.localPosition.x < -0.2f)
-            {
-                if (rospeedH > -55)
-                    rospeedH -= 5;
-            }
-            else
-            {
-                if (rospeedH > 5)
-                    rospeedH -= 9;
-                else if (rospeedH < -5)
-                    rospeedH += 9;
-                else
-                    rospeedH = 0;
-
-            }
-            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0,-3));
-            MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
         }
 
         if(Input.GetMouseButtonUp(0)&&moving)
