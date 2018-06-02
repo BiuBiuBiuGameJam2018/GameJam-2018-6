@@ -52,3 +52,4 @@ Assets/Scripts/Control/growing.cs
 Assets/Scripts/Model/BotanyBase.cs
 Assets/Scripts/Control/growing.cs
 Assets/Scripts/Model/BotanyBase.cs
+*.cs

@@ -48,7 +48,10 @@ public class BotanyBase : Objbase
     {
         
         Object node = Resources.Load("Botany/node");
+<<<<<<< HEAD
 
+=======
+>>>>>>> bf5e2933e1cb63923870bf51bd82e09177dedd84
         if (father == null)
         {
             beginPos = new Vector3(0, 0, MainManger.Instance.Bg.transform.position.z);
