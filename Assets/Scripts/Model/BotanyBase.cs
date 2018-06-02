@@ -44,7 +44,7 @@ public class BotanyBase : Objbase
     public TrailRenderer MainTrail;
     public GameObject SphereNode;
     public GameObject target;
-
+    
     //data
     protected int Serialnumber;///编号
     public float scale = 1;
@@ -117,7 +117,6 @@ public class BotanyBase : Objbase
         }
     }
 
-
     float rospeedH = 0;
     public float speed = 1;
     public void BeginGrow(RaycastHit hit)
@@ -146,8 +145,21 @@ public class BotanyBase : Objbase
             else
                 rospeedH = 0;
         }
+        //判断速度比例逻辑
+        if ((target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude >= 1.5f)
+        {
+            MainManger.Instance.speedScale = 1;
+        }
+        else if ((target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude < 0.5f)
+        {
+            MainManger.Instance.speedScale = 0;
+        }
+        else
+        {
+            MainManger.Instance.speedScale = (target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude - 0.5f;
+        }
         MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0, -3));
-        MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
+        MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed*MainManger.Instance.speedScale * Vector3.up);
 
     }
     /// <summary>

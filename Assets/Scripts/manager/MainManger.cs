@@ -9,7 +9,7 @@ public class MainManger : Singleton<MainManger>
     public BotanyBase CurSelect;
     public GameObject Bg;
     public GameObject node;
-
+    public float speedScale = 1;//生长速度比例（能量消耗速度）
     public int serialnumber = 0;
     GameObject trailroot;
     public GameObject TrailRoot
