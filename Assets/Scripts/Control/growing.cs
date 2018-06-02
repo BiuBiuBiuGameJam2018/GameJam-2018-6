@@ -59,7 +59,7 @@ public class growing : MonoBehaviour {
             }
             transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
             transform.Translate(Time.deltaTime * speed * Vector3.up);
-           // MainManger.Instance.CurSelect.MainTrail.transform.position = transform.position;
+           MainManger.Instance.CurSelect.MainTrail.transform.position = transform.position;
         }
 
         if(Input.GetMouseButtonUp(0)&&moving)

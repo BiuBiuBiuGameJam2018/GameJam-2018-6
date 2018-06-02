@@ -24,7 +24,8 @@ public class MainManger : Singleton<MainManger>
         }
     }
 
-    public void Init() {
+    public void Init()
+    {
         Bg = GameObject.Find("Bg");
     }
     #region 
@@ -48,13 +49,20 @@ public class MainManger : Singleton<MainManger>
     /// <summary>
     ///生成种子
     /// </summary>
-    void GenerateTrail(params Vector2[] pos)
+    public void GenerateTrail(params Vector2[] pos)
     {
         if (pos.Length <= 0)
             return;
         foreach (var item in pos)
         {
+            serialnumber = BotanyList.Count;
             BotanyBase botanybase = new BotanyBase(item);
+            BotanyList.Add(botanybase);
         }
+    }
+
+    public BotanyBase SelectFunc(GameObject obj)
+    {
+        return BotanyList.Find(o => o.SphereNood.Equals(obj));
     }
 }
