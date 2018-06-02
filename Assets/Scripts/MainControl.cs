@@ -74,7 +74,8 @@ public class MainControl : MonoBehaviour
         Game_State = GameState.Enum_Update;
     }
     public void GameUpdate()
-    {       
+    {
+        DataManager.Instance.GameUpdate();
         TimeManager.Instance.Generate();
         if (Input.GetKeyDown(KeyCode.Escape))
         {            

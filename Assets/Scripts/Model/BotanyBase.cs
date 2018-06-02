@@ -78,6 +78,7 @@ public class BotanyBase : Objbase
         {
             SphereNode = UnityEngine.Object.Instantiate(node, father.SphereNode.transform.position, father.SphereNode.transform.rotation) as GameObject;
         }
+        //SphereNode.tag = "Botany";
         SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         SphereNode.name = MainManger.Instance.serialnumber.ToString("000");
         MainTrail = SphereNode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>();
@@ -200,6 +201,9 @@ public class BotanyBase : Objbase
         if (timer <= 0)
         {
             var value = DataManager.Instance.EnergyConsumption(1, BotanyType);
+            if (value <= 0)
+                return false;
+            GrowDis += value;
             timer = 1.0f;
         }
         return true;
