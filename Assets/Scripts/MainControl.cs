@@ -51,7 +51,7 @@ public class MainControl : MonoBehaviour
     }
     public void Begin()
     {
-
+        DataManager.Instance.Begin();
         MainManger.Instance.Begin();
         TimeManager.Instance.Begin();
         Game_State = GameState.Enum_Load;
