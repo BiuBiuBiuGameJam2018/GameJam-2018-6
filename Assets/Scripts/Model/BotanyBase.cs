@@ -61,22 +61,23 @@ public class BotanyBase : Objbase
     void Create(BotanyBase father)
     {
         Object node = Resources.Load("Botany/node");
+        Serialnumber = MainManger.Instance.serialnumber;
         if (father == null)
         {
-            beginPos = new Vector3(0, 0.5f, MainManger.Instance.Bg.transform.position.z);
+
+            float y = Serialnumber == 0 ? 0.5f : -0.5f;
+            beginPos = new Vector3(0, Serialnumber, MainManger.Instance.Bg.transform.position.z);
             SphereNode = UnityEngine.Object.Instantiate(node, MainManger.Instance.Bg.transform.position + 2 * Vector3.back, Quaternion.Euler(Vector3.zero)) as GameObject;
-            SphereNode.transform.position = MainManger.Instance.Bg.transform.position + 2 * Vector3.back;
+            SphereNode.transform.position = MainManger.Instance.Bg.transform.position +( Serialnumber==0?1 * Vector3.back:-1 * Vector3.back);
             SphereNode.transform.eulerAngles = Vector3.zero;
         }
         else
         {
             SphereNode = UnityEngine.Object.Instantiate(node, father.SphereNode.transform.position, father.SphereNode.transform.rotation) as GameObject;
-            DataInit(father.BotanyType);
         }
         SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         SphereNode.name = MainManger.Instance.serialnumber.ToString("000");
         MainTrail = SphereNode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>();
-        Serialnumber = MainManger.Instance.serialnumber;
         MainTrail.time = 360000000000f;
         MainTrail.startWidth *= scale;
         MainTrail.endWidth *= scale;
@@ -85,6 +86,11 @@ public class BotanyBase : Objbase
         {
             scale = father.scale * reducescale;
             MainTrail.transform.position = new Vector3(father.SphereNode.transform.position.x, father.SphereNode.transform.position.y, MainTrail.transform.position.z);
+            DataInit(father.BotanyType);
+        }
+        else
+        {
+            DataInit();
 
         }
         SphereNode.transform.localScale *= scale;//缩放
@@ -103,6 +109,22 @@ public class BotanyBase : Objbase
     public float speed = 1;
     public void BeginGrow(RaycastHit hit)
     {
+        if (BotanyType == EnumBotanyType.TypeUp)
+        {
+            if (SphereNode.transform.position.y < 0.5f)
+            {
+                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, 0.5f, SphereNode.transform.position.z);
+                return;
+            }
+        }
+        if (BotanyType == EnumBotanyType.TypeDown)
+        {
+            if (SphereNode.transform.position.y >- 0.5f)
+            {
+                SphereNode.transform.position = new Vector3(SphereNode.transform.position.x, -0.5f, SphereNode.transform.position.z);
+                return;
+            }
+        }
         target.transform.position = new Vector3(hit.point.x, hit.point.y, MainManger.Instance.CurSelect.SphereNode.transform.position.z);
         if (target.transform.localPosition.x > 0.2f)
         {
