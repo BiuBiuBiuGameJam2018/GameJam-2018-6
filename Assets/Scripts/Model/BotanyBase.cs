@@ -45,16 +45,17 @@ public class BotanyBase : Objbase
     {
         Object node = Resources.Load("Botany/node");
         SphereNode = UnityEngine.Object.Instantiate(node, tran.position, tran.rotation) as GameObject;
+        if (SphereNode == null)
+            return;
+        SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
+        if (MainManger.Instance.Bg != null)
+            SphereNode.transform.position = new Vector3(tran.position.x, tran.position.y, MainManger.Instance.Bg.transform.position.z );
         MainTrail = SphereNode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>();
         MainTrail.name = MainManger.Instance.serialnumber.ToString("00");
         Serialnumber = MainManger.Instance.serialnumber;
-        if (MainManger.Instance.Bg != null)
-            MainTrail.transform.position = MainManger.Instance.Bg.transform.position - new Vector3(0, 0, 5);
-        MainTrail.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         MainTrail.time = 360000000000f;
         MainTrail.startWidth *= scale;
         MainTrail.endWidth *= scale;
-        MainTrail.transform.position = new Vector3(tran.position.x, tran.position.y, MainTrail.transform.position.z);
 
         target = SphereNode.transform.Find("target").gameObject;
         if (father != null)

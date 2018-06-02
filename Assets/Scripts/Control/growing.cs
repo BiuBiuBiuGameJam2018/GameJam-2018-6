@@ -26,7 +26,7 @@ public class growing : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0)&& myHit.collider.gameObject.tag=="node")//点到node
                 {
                     MainManger.Instance.SelectFunc(myHit.collider.gameObject);//更新当前节点
-                    target = myHit.collider.gameObject.transform.Find("target").gameObject;
+                    target = MainManger.Instance.CurSelect.target;
                     moving = true;
                 }
             }
@@ -35,32 +35,16 @@ public class growing : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit))
+            if (!Physics.Raycast(ray, out hit))
             {
-                target.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
+                Debug.Log("Ray Null");
+                return;
             }
-            if (target.transform.localPosition.x > 0.2f)
-            {
-                if (rospeedH < 55)
-                    rospeedH += 5;
-            }
-            else if (target.transform.localPosition.x < -0.2f)
-            {
-                if (rospeedH > -55)
-                    rospeedH -= 5;
-            }
-            else
-            {
-                if (rospeedH > 5)
-                    rospeedH -= 9;
-                else if (rospeedH < -5)
-                    rospeedH += 9;
-                else
-                    rospeedH = 0;
-
-            }
-            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
-            MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
+           
+            Vector3 vtr1 = hit.point - MainManger.Instance.CurSelect.SphereNode.transform.position;
+            Rotating(vtr1);
+            //MainManger.Instance.CurSelect.SphereNode.transform.Rotate(MainManger.Instance.CurSelect.SphereNode.transform.forward*rospee);
+            MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.forward);
         }
 
         if(Input.GetMouseButtonUp(0)&&moving)
@@ -80,5 +64,11 @@ public class growing : MonoBehaviour {
             //    = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth * 0.8f;
         }
 	}
-
+    void Rotating(Vector3 dir)
+    {
+        //将方向转换为四元数  
+        Quaternion quaDir = Quaternion.LookRotation(dir, Vector3.forward);
+        //缓慢转动到目标点  
+        MainManger.Instance.CurSelect.SphereNode.transform.rotation = Quaternion.Lerp(MainManger.Instance.CurSelect.SphereNode.transform.rotation, quaDir, Time.fixedDeltaTime * speed);
+    }
 }
