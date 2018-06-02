@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainManger : Singleton<MainManger>
 {
 
-    public List<BotanyBase> BotanyList;//所有植物列表
+    public List<BotanyBase> BotanyList=new List<BotanyBase>();//所有植物列表
     public BotanyBase CurSelect;
     public GameObject Bg;
     public GameObject node;
@@ -40,7 +40,7 @@ public class MainManger : Singleton<MainManger>
 
     public void Generate()
     {
-        GenerateTrail(new Vector2());
+        GenerateTrail(Bg.transform);
     }
     public void GameUpdate()
     {
@@ -55,8 +55,7 @@ public class MainManger : Singleton<MainManger>
         if (tran.Length <= 0)
             return;
         foreach (var item in tran)
-        {
-            
+        {          
             serialnumber = BotanyList.Count;
             BotanyBase botanybase = new BotanyBase(item);
             BotanyList.Add(botanybase);

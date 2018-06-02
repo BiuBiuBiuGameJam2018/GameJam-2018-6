@@ -12,12 +12,17 @@ public enum EnumBotanyState
     GrowingUp,
     Mature
 }
+
 public class Objbase
 {
    
 }
 public class BotanyBase : Objbase
 {
+    public BotanyBase father=null;
+    public float scale = 1;
+    public float reducescale=0.95f;//每一级的缩放比例
+
     public EnumBotanyType BotanyType;
     public EnumBotanyState BotanyState;
     public TrailRenderer MainTrail;
@@ -49,7 +54,14 @@ public class BotanyBase : Objbase
         MainTrail.transform.position = new Vector3(tran.position.x, tran.position.y, MainTrail.transform.position.z);
 
         target = SphereNode.transform.Find("target").gameObject;
-
+        if (father != null)
+        {
+            scale = father.scale * reducescale;
+        }
+        SphereNode.transform.localScale *= scale;//缩放
+        SphereNode.transform.Find("trail").gameObject.GetComponent<LineRenderer>().startWidth *= scale;
+        SphereNode.transform.Find("trail").gameObject.GetComponent<LineRenderer>().endWidth *= scale;
+        
     }
 
 }

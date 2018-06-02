@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class growing : MonoBehaviour {
     public GameObject target;
-    public GameObject node;
+    //public GameObject node;
     float rospeedH = 0;
     public float speed = 1;
     bool moving = false;
@@ -25,8 +25,8 @@ public class growing : MonoBehaviour {
             {
                 if (Input.GetMouseButtonDown(0)&& myHit.collider.gameObject.tag=="node")//点到node
                 {
-                    
-
+                    MainManger.Instance.SelectFunc(myHit.collider.gameObject);//更新当前节点
+                    target = myHit.collider.gameObject.transform.Find("target").gameObject;
                     moving = true;
                 }
             }
@@ -66,15 +66,18 @@ public class growing : MonoBehaviour {
         if(Input.GetMouseButtonUp(0)&&moving)
         {
             moving = false;
-            GameObject newnode = Instantiate(node,transform.position,this.transform.rotation);
-            newnode.transform.localScale = new Vector3(1, 1, 1) * 0.95f*scale;
-            newnode.GetComponent<growing>().scale = scale * 0.95f;
-            newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().startWidth 
-                = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().startWidth * 0.8f;
-            newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth 
-                = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth * 0.8f;
-            newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth
-                = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth * 0.8f;
+            //GameObject newnode = Instantiate(node,transform.position,this.transform.rotation);
+            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect.SphereNode.transform);
+
+
+            //newnode.transform.localScale = new Vector3(1, 1, 1) * 0.95f*scale;
+            //newnode.GetComponent<growing>().scale = scale * 0.95f;
+            //newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().startWidth 
+            //    = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().startWidth * 0.8f;
+            //newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth 
+            //    = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth * 0.8f;
+            //newnode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth
+            //    = transform.Find("Trail").gameObject.GetComponent<TrailRenderer>().endWidth * 0.8f;
         }
 	}
 
