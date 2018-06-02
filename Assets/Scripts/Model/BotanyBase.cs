@@ -48,14 +48,7 @@ public class BotanyBase : Objbase
     {
         
         Object node = Resources.Load("Botany/node");
-<<<<<<< HEAD
-        SphereNode = UnityEngine.Object.Instantiate(node, tran.position, tran.rotation) as GameObject;
-        if (SphereNode == null)
-            return;
-        SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
-        if (MainManger.Instance.Bg != null)
-            SphereNode.transform.position = new Vector3(tran.position.x, tran.position.y, MainManger.Instance.Bg.transform.position.z );
-=======
+
         if (father == null)
         {
             beginPos = new Vector3(0, 0, MainManger.Instance.Bg.transform.position.z);
@@ -67,16 +60,11 @@ public class BotanyBase : Objbase
             SphereNode = UnityEngine.Object.Instantiate(node, father.SphereNode.transform.position, father.SphereNode.transform.rotation) as GameObject;
         SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         SphereNode.name = MainManger.Instance.serialnumber.ToString("000");
->>>>>>> 5bea485b4afd166be90d8f89dba4d53320b726ca
         MainTrail = SphereNode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>();
         Serialnumber = MainManger.Instance.serialnumber;
         MainTrail.time = 360000000000f;
         MainTrail.startWidth *= scale;
         MainTrail.endWidth *= scale;
-<<<<<<< HEAD
-
-=======
->>>>>>> 5bea485b4afd166be90d8f89dba4d53320b726ca
         target = SphereNode.transform.Find("target").gameObject;
         if (father != null)
         {
@@ -85,9 +73,7 @@ public class BotanyBase : Objbase
 
         }
         SphereNode.transform.localScale *= scale;//缩放
-
         MainTrail.transform.position = SphereNode.transform.position;
-
     }
 
 }
