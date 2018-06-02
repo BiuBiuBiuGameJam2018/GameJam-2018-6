@@ -12,6 +12,7 @@ public class MainManger : Singleton<MainManger>
 
     public int serialnumber = 0;
     GameObject trailroot;
+
     public GameObject TrailRoot
     {
         get
@@ -32,6 +33,7 @@ public class MainManger : Singleton<MainManger>
     #region 
     public void Begin()
     {
+
     }
     public void Load()
     {
@@ -40,7 +42,8 @@ public class MainManger : Singleton<MainManger>
 
     public void Generate()
     {
-        GenerateTrail(Bg.transform);
+        BotanyBase a = null;
+        GenerateTrail(a);
     }
     public void GameUpdate()
     {
@@ -50,7 +53,7 @@ public class MainManger : Singleton<MainManger>
     /// <summary>
     ///生成种子
     /// </summary>
-    public void GenerateTrail(params Transform[]tran)
+    public void GenerateTrail(params BotanyBase[]tran)
     {
         if (tran.Length <= 0)
             return;
@@ -61,7 +64,15 @@ public class MainManger : Singleton<MainManger>
             BotanyList.Add(botanybase);
         }
     }
-
+    /// <summary>
+    ///生成种子
+    /// </summary>
+    public void GenerateTrail(BotanyBase item)
+    {
+            serialnumber = BotanyList.Count;
+            BotanyBase botanybase = new BotanyBase(item);
+            BotanyList.Add(botanybase);
+    }
     public BotanyBase SelectFunc(GameObject obj)
     {
         CurSelect = BotanyList.Find(o => o.SphereNode.Equals(obj));

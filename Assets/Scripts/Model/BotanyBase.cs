@@ -33,36 +33,47 @@ public class BotanyBase : Objbase
     public int BranchConsumption;//分支消耗 需要配置
     public float scale = 1;
     public float reducescale = 0.95f;//每一级的缩放比例
-    public BotanyBase(Transform tran)
+
+    Vector3 beginPos;
+    Vector3 beginrote;
+    public BotanyBase(BotanyBase father)
     {
-        Create(tran);
+        Create(father);
     }
     /// <summary>
     /// 创建时调用
     /// </summary>
     /// <param name="pos"></param>
-    void Create(Transform tran)
+    void Create(BotanyBase father)
     {
+        
         Object node = Resources.Load("Botany/node");
-        SphereNode = UnityEngine.Object.Instantiate(node, tran.position, tran.rotation) as GameObject;
+        if (father == null)
+        {
+            beginPos = new Vector3(0, 0, MainManger.Instance.Bg.transform.position.z);
+            SphereNode = UnityEngine.Object.Instantiate(node, MainManger.Instance.Bg.transform.position + 2 * Vector3.back, Quaternion.Euler(Vector3.zero)) as GameObject;
+            SphereNode.transform.position = MainManger.Instance.Bg.transform.position + 2 * Vector3.back;
+            SphereNode.transform.eulerAngles = Vector3.zero;
+        }
+        else
+            SphereNode = UnityEngine.Object.Instantiate(node, father.SphereNode.transform.position, father.SphereNode.transform.rotation) as GameObject;
+        SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
+        SphereNode.name = MainManger.Instance.serialnumber.ToString("000");
         MainTrail = SphereNode.transform.Find("Trail").gameObject.GetComponent<TrailRenderer>();
-        MainTrail.name = MainManger.Instance.serialnumber.ToString("00");
         Serialnumber = MainManger.Instance.serialnumber;
-        if (MainManger.Instance.Bg != null)
-            MainTrail.transform.position = MainManger.Instance.Bg.transform.position - new Vector3(0, 0, 5);
-        MainTrail.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         MainTrail.time = 360000000000f;
         MainTrail.startWidth *= scale;
         MainTrail.endWidth *= scale;
-        MainTrail.transform.position = new Vector3(tran.position.x, tran.position.y, MainTrail.transform.position.z);
-
         target = SphereNode.transform.Find("target").gameObject;
         if (father != null)
         {
             scale = father.scale * reducescale;
+            MainTrail.transform.position = new Vector3(father.SphereNode.transform.position.x, father.SphereNode.transform.position.y, MainTrail.transform.position.z);
+
         }
         SphereNode.transform.localScale *= scale;//缩放
 
+        MainTrail.transform.position = SphereNode.transform.position;
 
     }
 

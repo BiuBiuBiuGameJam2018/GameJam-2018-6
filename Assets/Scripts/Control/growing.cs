@@ -37,7 +37,7 @@ public class growing : MonoBehaviour {
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
             {
-                target.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
+                target.transform.position = new Vector3(hit.point.x, hit.point.y,MainManger.Instance.CurSelect.SphereNode. transform.position.z);
             }
             if (target.transform.localPosition.x > 0.2f)
             {
@@ -59,7 +59,7 @@ public class growing : MonoBehaviour {
                     rospeedH = 0;
 
             }
-            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.fixedDeltaTime * new Vector3(0, 0, -3));
+            MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0,-3));
             MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed * Vector3.up);
         }
 
@@ -67,7 +67,7 @@ public class growing : MonoBehaviour {
         {
             moving = false;
             //GameObject newnode = Instantiate(node,transform.position,this.transform.rotation);
-            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect.SphereNode.transform);
+            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect);
 
 
             //newnode.transform.localScale = new Vector3(1, 1, 1) * 0.95f*scale;
