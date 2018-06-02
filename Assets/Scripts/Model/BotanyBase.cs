@@ -28,6 +28,7 @@ public class Objbase
 }
 public class BotanyBase : Objbase
 {
+    public List<GameObject> Leafs = new List<GameObject>();
     public BotanyBase father = null;
     /// <summary>
     /// 生长距离
@@ -223,11 +224,12 @@ public class BotanyBase : Objbase
     /// <summary>
     /// 长叶子
     /// </summary>
-    public void GrowLeaf() {
-        Object obj = Resources.Load("Botany/Leaf");
-        GameObject Leaf = UnityEngine.Object.Instantiate(obj) as GameObject;
-        Leaf.transform.SetParent(SphereNode.transform);
-        Leaf.transform.position = SphereNode.transform.position;
-
+    public void GrowLeaf(int num) {
+        for (int i = 0; i < num; i++)
+        {
+            GameObject Leaf = MainManger.Instance.GetLeaf();
+            Leaf.transform.position = SphereNode.transform.position;
+            Leafs.Add(Leaf);
+        }
     }
 }
