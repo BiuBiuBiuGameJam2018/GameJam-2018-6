@@ -12,6 +12,7 @@ public enum GameState
 public class MainControl : MonoBehaviour
 {
     public GameState Game_State = GameState.Enum_Begin;
+    float firstesctime = -10;
     public string ConfigPath
     {
         get
@@ -48,6 +49,8 @@ public class MainControl : MonoBehaviour
             default:
                 break;
         }
+
+
     }
     public void Begin()
     {
@@ -71,7 +74,14 @@ public class MainControl : MonoBehaviour
         Game_State = GameState.Enum_Update;
     }
     public void GameUpdate()
-    {
+    {       
         TimeManager.Instance.Generate();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {            
+            if (Time.time - firstesctime > 0.5f)
+                firstesctime = Time.time;
+            else
+                Application.Quit();
+        }
     }
 }
