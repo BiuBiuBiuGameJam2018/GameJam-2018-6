@@ -79,4 +79,15 @@ public class MainManger : Singleton<MainManger>
         CurSelect = BotanyList.Find(o => o.SphereNode.Equals(obj));
         return CurSelect;
     }
+
+    public float AllDis()
+    {
+        float dis =0;
+        foreach (var item in BotanyList)
+        {
+            if (item.BotanyType == EnumBotanyType.TypeDown)
+                dis += item.GrowDis;
+        }
+        return dis;
+    }
 }
