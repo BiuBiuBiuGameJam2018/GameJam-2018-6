@@ -17,6 +17,7 @@ public class growing : MonoBehaviour {
 	void Update () {
         if(Input.GetMouseButtonDown(0))
         {
+            
             Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit myHit;
             if (Physics.Raycast(myRay, out myHit))
@@ -28,6 +29,7 @@ public class growing : MonoBehaviour {
                     moving = true;
                 }
             }
+            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect);
         }
 		if(Input.GetMouseButton(0)&&moving)
         {
@@ -43,8 +45,8 @@ public class growing : MonoBehaviour {
         {
             moving = false;
             //GameObject newnode = Instantiate(node,transform.position,this.transform.rotation);
-            MainManger.Instance.GenerateTrail(MainManger.Instance.CurSelect);
 
+            MainManger.Instance.CurSelect.SphereNode.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
             //newnode.transform.localScale = new Vector3(1, 1, 1) * 0.95f*scale;
             //newnode.GetComponent<growing>().scale = scale * 0.95f;

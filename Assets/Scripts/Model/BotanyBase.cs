@@ -45,12 +45,11 @@ public class BotanyBase : Objbase
     public TrailRenderer MainTrail;
     public GameObject SphereNode;
     public GameObject target;
-    
+    public GameObject forward;
     //data
     protected int Serialnumber;///编号
     public float scale = 1;
     public float reducescale = 0.95f;//每一级的缩放比例
-
     Vector3 beginPos;
     Vector3 beginrote;
     public BotanyBase(BotanyBase father)
@@ -71,14 +70,16 @@ public class BotanyBase : Objbase
             float y = Serialnumber == 0 ? 0.5f : -0.5f;
             beginPos = new Vector3(0, Serialnumber, MainManger.Instance.Bg.transform.position.z);
             SphereNode = UnityEngine.Object.Instantiate(node, MainManger.Instance.Bg.transform.position - 2 * Vector3.back, Quaternion.Euler(Vector3.zero)) as GameObject;
-            SphereNode.transform.position = MainManger.Instance.Bg.transform.position + 1 * Vector3.back;
+            SphereNode.transform.position = MainManger.Instance.Bg.transform.position + 0.2f * Vector3.back;
             SphereNode.transform.position += (0.5f * (Serialnumber == 0 ? Vector3.up : Vector3.down));
             SphereNode.transform.eulerAngles = Vector3.zero;
         }
         else
         {
             SphereNode = UnityEngine.Object.Instantiate(node, father.SphereNode.transform.position, father.SphereNode.transform.rotation) as GameObject;
+
         }
+        forward = SphereNode.transform.Find("forward").gameObject;
         //SphereNode.tag = "Botany";
         SphereNode.transform.SetParent(MainManger.Instance.TrailRoot.transform);
         SphereNode.name = MainManger.Instance.serialnumber.ToString("000");
@@ -95,10 +96,11 @@ public class BotanyBase : Objbase
         }
         else
         {
-            DataInit(Serialnumber == 0 ? EnumBotanyType.TypeUp : EnumBotanyType.TypeDown);
+            DataInit(Serialnumber == 0 ? EnumBotanyType.TypeUp : EnumBotanyType.TypeDown);           
         }
         SphereNode.transform.localScale *= scale;//缩放
         MainTrail.transform.position = SphereNode.transform.position;
+        
     }
 
     public void DataInit(EnumBotanyType botanyType = EnumBotanyType.TypeDown)
@@ -147,7 +149,7 @@ public class BotanyBase : Objbase
                 rospeedH = 0;
         }
         //判断速度比例逻辑
-        if ((target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude >= 1.5f)
+        if ((target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude >= 1f)
         {
             MainManger.Instance.speedScale = 1;
         }
@@ -157,10 +159,12 @@ public class BotanyBase : Objbase
         }
         else
         {
-            MainManger.Instance.speedScale = (target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude - 0.5f;
+            MainManger.Instance.speedScale = ((target.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position).magnitude - 0.5f)*2;
         }
         MainManger.Instance.CurSelect.SphereNode.transform.Rotate(rospeedH * Time.deltaTime * new Vector3(0, 0, -3));
-        MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed*MainManger.Instance.speedScale * Vector3.up);
+        MainManger.Instance.CurSelect.SphereNode.GetComponent<Rigidbody>().velocity = speed * MainManger.Instance.speedScale *
+            (forward.transform.position - MainManger.Instance.CurSelect.SphereNode.transform.position);
+        //MainManger.Instance.CurSelect.SphereNode.transform.Translate(Time.deltaTime * speed*MainManger.Instance.speedScale * Vector3.up);
 
     }
     /// <summary>

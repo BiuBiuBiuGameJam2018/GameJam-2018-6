@@ -22,7 +22,7 @@ public class CameraControl : MonoBehaviour {
         //Zoom out  
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (Camera.main.fieldOfView <= 100)
+            if (Camera.main.fieldOfView <= 200)
                 Camera.main.fieldOfView += 2;
             if (Camera.main.orthographicSize <= furthest)
                 Camera.main.orthographicSize += 0.5F;
@@ -30,7 +30,7 @@ public class CameraControl : MonoBehaviour {
         //Zoom in  
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (Camera.main.fieldOfView > 2)
+            if (Camera.main.fieldOfView > 30)
                 Camera.main.fieldOfView -= 2;
             if (Camera.main.orthographicSize >=nearest)
                 Camera.main.orthographicSize -= 0.5F;
